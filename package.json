@@ -1,0 +1,28 @@
+{
+  "name": "calendar-next",
+  "version": "1.0.0",
+  "description": "calendar components, `vue`, `react`, `svelte` UI calendar components",
+  "main": "./dist/index.js",
+  "scripts": {
+    "dev": "pnpm --parallel --filter ./**/* dev",
+    "build": "pnpm --parallel --filter ./packages/core build",
+    "build:vue": "pnpm build && pnpm --parallel --filter ./packages/vue build"
+  },
+  "keywords": [],
+  "author": "fafayzf <fafayzf@163.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fafayzf/calendar-next.git"
+  },
+  "bugs": "https://github.com/fafayzf/calendar-next/issues",
+  "homepage": "https://github.com/fafayzf/calendar-next#readme",
+  "license": "MIT",
+  "dependencies": {
+    "date-fns": "^2.30.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.6",
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.3"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "name": "@calendar-next/core",
+  "version": "0.0.1",
+  "description": "",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.dts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "dev": "tsup src/index.ts --watch --format esm,cjs",
+    "build": "tsup src/index.ts --dts --format esm,cjs"
+  },
+  "keywords": [],
+  "author": "fafayzf <fafayzf@163.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fafayzf/calendar-next.git"
+  },
+  "bugs": "https://github.com/fafayzf/calendar-next/issues",
+  "homepage": "https://github.com/fafayzf/calendar-next#readme",
+  "license": "MIT"
+}

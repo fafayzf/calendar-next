@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "ignoreDeprecations": "5.0",
+    "module": "esnext",
+    "target": "ES6",
+    "lib": ["ESNext", "DOM"],
+    "strict": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "paths": {
+      "@calendar-next/core": ["./packages/core/src/index.ts"],
+    },
+    "types": [
+      "node",
+    ]
+  },
+  "exclude": [
+    "**/dist/**",
+    "./packages/*/*.d.ts"
+  ],
+}
