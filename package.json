@@ -4,7 +4,8 @@
   "description": "calendar components, `vue`, `react`, `svelte` UI calendar components",
   "main": "./dist/index.js",
   "scripts": {
-    "dev": "pnpm --parallel --filter ./**/* dev",
+    "dev": "pnpm --parallel --filter ./packages/* dev",
+    "dev:examples": "pnpm --parallel --filter ./examples/* dev",
     "build": "pnpm --parallel --filter ./packages/core build",
     "build:vue": "pnpm build && pnpm --parallel --filter ./packages/vue build"
   },

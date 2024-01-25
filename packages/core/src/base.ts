@@ -19,7 +19,7 @@ export type WeekMap = {
 /**
  * 每个日期的数据类型
  */
-type DayInfo = {
+export type DayInfo = {
   /**
    * 当前为几号
    */
@@ -79,11 +79,11 @@ export default class DatePicker {
   /**
    * 日历表头第一个日期是星期几
    */
-  startWeek: number = 0
+  startWeek: number
   /**
    * 当前月面板显示多少个星期，最少显示当前月日期的最少周期，若weekRow小于当前月最小周期，则默认显示最小周期，否则按weekRow设置的来
    */
-  weekRow: number = 6
+  weekRow: number
   /**
    * 当前月的面板日期集合（包括上个月的结尾日期和下个月的开头日期）
    */
@@ -95,14 +95,13 @@ export default class DatePicker {
 
   constructor(option: {
     value: Date | string,
-    startWeek: number,
-    weekRow: number,
-    weekHead: WeekMap
+    startWeek?: number,
+    weekRow?: number,
   }) {
     const { value, startWeek, weekRow } = option
     this.value = new Date(value)
-    this.startWeek = startWeek
-    this.weekRow = weekRow
+    this.startWeek = startWeek || 0
+    this.weekRow = weekRow || 6
     this.weekHead = this.getHeader()
 
     this.changeCalendar()
