@@ -75,26 +75,33 @@ export default class DatePicker {
   /**
    * 当前日期
    */
-  date: Date
+  value: Date
   /**
    * 日历表头第一个日期是星期几
    */
-  week: number = 0
+  startWeek: number = 0
   /**
    * 当前月面板显示多少个星期，最少显示当前月日期的最少周期，若weekRow小于当前月最小周期，则默认显示最小周期，否则按weekRow设置的来
    */
   weekRow: number = 6
-  days: number[] = []
+  /**
+   * 当前月的面板日期集合（包括上个月的结尾日期和下个月的开头日期）
+   */
+  panelDays: DayInfo[] = []
+  /**
+   * 顶部星期的栏目
+   */
   weekHead: WeekValue[] = []
+
   constructor(option: {
-    date: Date | string,
-    week: number,
+    value: Date | string,
+    startWeek: number,
     weekRow: number,
     weekHead: WeekMap
   }) {
-    const { date, week, weekRow } = option
-    this.date = new Date(date)
-    this.week = week
+    const { value, startWeek, weekRow } = option
+    this.value = new Date(value)
+    this.startWeek = startWeek
     this.weekRow = weekRow
     this.weekHead = this.getHeader()
 
@@ -105,14 +112,14 @@ export default class DatePicker {
    * @param format 指定格式 （YYYY-MM-DD等），不传则返回this.date原始值 
    */
   getDate(format: string) {
-    return fnsFormat(this.date, format)
+    return fnsFormat(this.value, format)
   }
   /**
    * 设置时间
    * @param date 
    */
   setDate(date: string | Date) {
-    this.date = new Date(date)
+    this.value = new Date(date)
     this.changeCalendar()
   }
   /**
@@ -120,25 +127,30 @@ export default class DatePicker {
    * @returns 周几
    */
   getFirstWeekDay() {
-    const firstDay = startOfMonth(this.date)
+    const firstDay = startOfMonth(this.value)
 
     return getDay(firstDay)
   }
   /**
    * 获取当前月最后一天是周几
-   * @returns 
    */
   getLastWeekDay() {
-    const lastDay = endOfMonth(this.date)
+    const lastDay = endOfMonth(this.value)
     return getDay(lastDay)
   }
   /**
    * 插入当前月的所有天数
    */
   setDaysInMonth() {
-    const inMonthdays = getDaysInMonth(this.date)
+    const inMonthdays = getDaysInMonth(this.value)
     for (let i = 1; i <= inMonthdays; i++) {
-      this.days.push(i)
+      const currentDateInfo: DayInfo = {
+        value: i,
+        isCurrent: true,
+        isPrev: false,
+        isNext: false
+      }
+      this.panelDays.push(currentDateInfo)
     }
   }
   /**
@@ -154,10 +166,16 @@ export default class DatePicker {
     let diffDay = this.prevDiffDay
 
     if (diffDay > 0) {
-      let monthLastDay = getDaysInMonth(sub(this.date, { months: 1 }))
+      let monthLastDay = getDaysInMonth(sub(this.value, { months: 1 }))
       
       while (diffDay) {
-        this.days.unshift(monthLastDay)
+        const prevDateInfo: DayInfo = {
+          value: monthLastDay,
+          isCurrent: false,
+          isPrev: true,
+          isNext: false
+        }
+        this.panelDays.unshift(prevDateInfo)
 
         diffDay--
         monthLastDay--
@@ -177,22 +195,35 @@ export default class DatePicker {
     
     if (diffDay > 0) {
       for (let i = 1; i <= diffDay; i++) {
-        this.days.push(i)
+        const nextDateInfo: DayInfo = {
+          value: i,
+          isCurrent: false,
+          isPrev: false,
+          isNext: true
+        }
+        this.panelDays.push(nextDateInfo)
       }
     }
   }
   /**
-   * 根据当前指定星期的行数确认日历显示多少星期
+   * 根据当前指定星期的行数确认日历显示多少个星期
    */
   diffWeek() {
-    const weeks = Math.floor(this.days.length / 7)
+    const weeks = Math.floor(this.panelDays.length / 7)
     
     if (this.weekRow > weeks) {
       // 若最后一天正好为当前星期的最后一天，则lastDay为0
-      const lastDay = this.nextDiffDay ? this.days[this.days.length - 1] : 0
-      
-      for (let i = lastDay + 1; i <= lastDay + (this.weekRow - weeks) * 7; i++) {
-        this.days.push(i)
+      const lastDay = this.nextDiffDay ? this.panelDays[this.panelDays.length - 1].value : 0
+      const endDays = lastDay + (this.weekRow - weeks) * 7
+
+      for (let i = lastDay + 1; i <= endDays; i++) {
+        const nextDateInfo: DayInfo = {
+          value: i,
+          isCurrent: false,
+          isPrev: false,
+          isNext: true
+        }
+        this.panelDays.push(nextDateInfo)
       }
     }
     
@@ -203,7 +234,7 @@ export default class DatePicker {
   getRowWeek() {
     const rows: any = []
     for (let i = 0; i < this.weekRow; i++) {
-      const week = this.days.slice(i * 7, (i + 1) * 7)
+      const week = this.panelDays.slice(i * 7, (i + 1) * 7)
       rows.push(week)
     }
     return rows
@@ -212,14 +243,14 @@ export default class DatePicker {
    * 获取顶部信息
    */
   getHeader() {
-    if (!weekMap.hasOwnProperty(this.week)) {
-      throw new Error(`Invalid first key: ${this.week}`)
+    if (!weekMap.hasOwnProperty(this.startWeek)) {
+      throw new Error(`Invalid first key: ${this.startWeek}`)
     }
 
     const values = Object.values(weekMap)
 
-    if (this.week !== 0) {
-      let currentWeek = this.week
+    if (this.startWeek !== 0) {
+      let currentWeek = this.startWeek
     
       while(currentWeek) {
         values.push(values.shift() as WeekValue)
@@ -233,7 +264,7 @@ export default class DatePicker {
    * 改变当月日历
    */
   changeCalendar() {
-    this.days = []
+    this.panelDays = []
     this.setDaysInMonth()
     this.diffLastDay()
     this.diffNextDay()
