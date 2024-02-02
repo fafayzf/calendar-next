@@ -1,6 +1,6 @@
 import { defineComponent, ref, watch, h, createVNode, Fragment } from 'vue'
 import { DatePicker } from '@calendar-next/core'
-import { subMonths, addMonths, format } from 'date-fns'
+import { subMonths, addMonths, format, isSameDay } from 'date-fns'
 import './DatePicker.css'
 
 import ComponentUtil from '../componentUtil'
@@ -9,7 +9,8 @@ export default ComponentUtil.withInstall(
   defineComponent({
     name: 'DatePicker',
     setup() {
-      const date = ref(new Date()) 
+      const date = ref(new Date())
+      const normalDate = ref(new Date())
       const picker = new DatePicker({
         value: date.value,
         startWeek: 1,
@@ -20,32 +21,44 @@ export default ComponentUtil.withInstall(
 
       const panel = ref(picker.getRowWeek())
 
-      watch(date, () => {
+      watch([date, normalDate], () => {
         panel.value = picker.getRowWeek()
       })
 
-      function isActive(current: number) {
-        return Number(format(date.value, 'dd')) === current
+      function isActive(current: Date) {        
+        return isSameDay(date.value, current)
       }
 
       function prevMonth() {
-        const prevMonth = subMonths(date.value, 1)
-        date.value = prevMonth
-        picker.setDate(date.value)
+        const prevMonth = subMonths(normalDate.value, 1)
+        normalDate.value = prevMonth
+        picker.setDate(normalDate.value)
       }
 
       function nextMonth() {
-        const nextMonth = addMonths(date.value, 1)
-        date.value = nextMonth
-        picker.setDate(date.value)
+        const nextMonth = addMonths(normalDate.value, 1)
+        normalDate.value = nextMonth
+        picker.setDate(normalDate.value)
       }
 
+      function chooseDate(item: any) {
+        normalDate.value = item.value
+        date.value = item.value
+        picker.setDate(item.value)
+      }
+
+      function resetDate() {
+        const now = new Date()
+        normalDate.value = now
+        date.value = now
+        picker.setDate(date.value)
+      }
       return () => {
         return (
           <Fragment>
             <div class="panel">
               <div class="header">
-                <div class="current-date">{format(date.value, 'yyyy-MM-dd')}</div>
+                <div class="current-date">{format(normalDate.value, 'yyyy-MM-dd')}</div>
                 <div class="month-btns">
                   <button onClick={prevMonth}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -69,8 +82,8 @@ export default ComponentUtil.withInstall(
                   return (
                     <div class="row" key={index}>
                       {row.map((item: any, i: number) => {
-                        return (
-                          <div 
+                        return (<div
+                          onClick={() => chooseDate(item)}
                           key={i}
                           class={[
                             'div',
@@ -78,10 +91,13 @@ export default ComponentUtil.withInstall(
                             item.isNext ? 'next': '',
                             isActive(item.value) && item.isCurrent ? 'current' : ''
                           ].join(' ')} 
-                        >{item.value}</div>)
+                        >{format(item.value, 'dd')}</div>)
                       })}
                     </div>)
                 })}
+              </div>
+              <div class="footer">
+                <button onClick={resetDate}>今天</button>
               </div>
             </div>
           </Fragment>

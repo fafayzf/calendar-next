@@ -1,8 +1,10 @@
 import {
+  add,
   endOfMonth, 
   format as fnsFormat,
   getDay,
   getDaysInMonth,
+  setDate,
   startOfMonth, 
   sub 
 } from 'date-fns'
@@ -23,7 +25,7 @@ export type DayInfo = {
   /**
    * 当前为几号
    */
-  value: number,
+  value: Date,
   /**
    * 是否为当月日期
    */
@@ -118,7 +120,7 @@ export default class DatePicker {
    * @param date 
    */
   setDate(date: string | Date) {
-    this.value = new Date(date)
+    this.value = new Date(date)    
     this.changeCalendar()
   }
   /**
@@ -143,8 +145,10 @@ export default class DatePicker {
   setDaysInMonth() {
     const inMonthdays = getDaysInMonth(this.value)
     for (let i = 1; i <= inMonthdays; i++) {
+      const value = setDate(this.value, i)
+      
       const currentDateInfo: DayInfo = {
-        value: i,
+        value,
         isCurrent: true,
         isPrev: false,
         isNext: false
@@ -165,11 +169,13 @@ export default class DatePicker {
     let diffDay = this.prevDiffDay
 
     if (diffDay > 0) {
-      let monthLastDay = getDaysInMonth(sub(this.value, { months: 1 }))
+      const prevMonth = sub(this.value, { months: 1 })
+      let monthLastDay = getDaysInMonth(prevMonth)
       
       while (diffDay) {
+        const value = setDate(prevMonth, monthLastDay)
         const prevDateInfo: DayInfo = {
-          value: monthLastDay,
+          value,
           isCurrent: false,
           isPrev: true,
           isNext: false
@@ -191,11 +197,13 @@ export default class DatePicker {
   // 补当月结尾与下个月开头的日期
   diffNextDay() {
     let diffDay = this.nextDiffDay
-    
+
     if (diffDay > 0) {
+      const nextMonth = add(this.value, { months: 1 })
       for (let i = 1; i <= diffDay; i++) {
+        const value = setDate(nextMonth, i)
         const nextDateInfo: DayInfo = {
-          value: i,
+          value,
           isCurrent: false,
           isPrev: false,
           isNext: true
@@ -212,12 +220,16 @@ export default class DatePicker {
     
     if (this.weekRow > weeks) {
       // 若最后一天正好为当前星期的最后一天，则lastDay为0
-      const lastDay = this.nextDiffDay ? this.panelDays[this.panelDays.length - 1].value : 0
+      const lastDate = Number(fnsFormat(this.panelDays[this.panelDays.length - 1].value, 'dd'))
+      const lastDay = this.nextDiffDay ? lastDate : 0
       const endDays = lastDay + (this.weekRow - weeks) * 7
+      const nextMonth = add(this.value, { months: 1 })
 
       for (let i = lastDay + 1; i <= endDays; i++) {
+        
+        const value = setDate(nextMonth, i)
         const nextDateInfo: DayInfo = {
-          value: i,
+          value,
           isCurrent: false,
           isPrev: false,
           isNext: true
@@ -231,7 +243,7 @@ export default class DatePicker {
    * 每周的排列
    */
   getRowWeek() {
-    const rows: any = []
+    const rows: DayInfo[][] = []
     for (let i = 0; i < this.weekRow; i++) {
       const week = this.panelDays.slice(i * 7, (i + 1) * 7)
       rows.push(week)

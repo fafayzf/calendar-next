@@ -7,8 +7,6 @@
     "strict": true,
     "declaration": false,
     "moduleResolution": "node",
-    "jsx": "preserve",
-    "jsxImportSource": "vue",
     "paths": {
     },
     "types": [
