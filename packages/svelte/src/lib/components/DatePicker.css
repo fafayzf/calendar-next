@@ -1,0 +1,99 @@
+.header {
+  display: flex;
+  margin: 0 8px;
+  padding-bottom: 8px;
+  padding-left: 8px;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(5, 5, 5, 0.06);
+}
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(5, 5, 5, 0.06);
+}
+.footer button {
+  border: 0;
+  padding: 4px 8px;
+  background-color: transparent;
+  color: rgba(64, 158, 255, 1);
+}
+.footer button:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+  border-radius: 4px;
+}
+.week-header {
+  display: flex;
+  justify-content: center;
+  padding: 0 18px;
+}
+.row {
+  display: flex;
+  justify-content: center;
+}
+.div {
+  width: 36px;
+  height: 36px;
+  text-align: center;
+  line-height: 36px;
+  color: rgba(0, 0, 0, 0.88);
+  font-size: 14px;
+  margin: 4px;
+  border: 0;
+  background-color: transparent;
+}
+.body {
+  padding: 0 18px;
+}
+.row .div {
+  cursor: pointer;
+  border-radius: 4px;
+}
+.row .div:hover {
+  background: rgba(64, 158, 255, 0.05);
+  color: rgba(0, 0, 0, 0.88);
+}
+.panel {
+  width: max-content;
+  padding: 8px 0;
+  border-radius: 8px;
+  box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08),
+      0 3px 6px -4px rgba(0, 0, 0, 0.12),
+      0 9px 28px 8px rgba(0, 0, 0, 0.05);
+}
+.prev, .next {
+  color: rgba(0, 0, 0, 0.25);
+}
+.month-btns {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.month-btns button {
+  width: 24px;
+  height: 24px;
+  text-align: center;
+  margin-left: 4px;
+  background: transparent;
+  border: 0;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.54);
+  padding: 0;
+}
+.month-btns button:hover, .current-date:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+  border-radius: 4px;
+}
+.current-date {
+  padding: 2px 8px;
+}
+
+.current {
+  background: rgba(64, 158, 255, 1) !important;
+  color: #fff !important;
+}

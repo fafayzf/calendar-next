@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "pnpm --parallel --filter ./packages/* dev",
     "dev:examples": "pnpm --parallel --filter ./examples/* dev",
-    "build": "pnpm --parallel --filter ./packages/core build",
+    "build:core": "pnpm --parallel --filter ./packages/core build",
+    "build:svelte": "pnpm --parallel --filter ./packages/svelte build",
     "build:vue": "pnpm build && pnpm --parallel --filter ./packages/vue build"
   },
   "keywords": [],
