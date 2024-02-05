@@ -1,6 +1,6 @@
-import { defineComponent, ref, watch, h, createVNode, Fragment } from 'vue'
+import { Fragment, defineComponent, ref, watch } from 'vue'
 import { DatePicker } from '@calendar-next/core'
-import { subMonths, addMonths, format, isSameDay } from 'date-fns'
+import { addMonths, format, isSameDay, subMonths } from 'date-fns'
 import './DatePicker.css'
 
 import ComponentUtil from '../componentUtil'
@@ -14,9 +14,9 @@ export default ComponentUtil.withInstall(
       const picker = new DatePicker({
         value: date.value,
         startWeek: 1,
-        weekRow: 6
+        weekRow: 6,
       })
-      
+
       const header = picker.weekHead
 
       const panel = ref(picker.getRowWeek())
@@ -25,7 +25,7 @@ export default ComponentUtil.withInstall(
         panel.value = picker.getRowWeek()
       })
 
-      function isActive(current: Date) {        
+      function isActive(current: Date) {
         return isSameDay(date.value, current)
       }
 
@@ -82,18 +82,23 @@ export default ComponentUtil.withInstall(
                   return (
                     <div class="row" key={index}>
                       {row.map((item: any, i: number) => {
-                        return (<div
-                          onClick={() => chooseDate(item)}
-                          key={i}
-                          class={[
-                            'div',
-                            item.isPrev ? 'prev': '',
-                            item.isNext ? 'next': '',
-                            isActive(item.value) && item.isCurrent ? 'current' : ''
-                          ].join(' ')} 
-                        >{format(item.value, 'dd')}</div>)
+                        return (
+                          <div
+                            onClick={() => chooseDate(item)}
+                            key={i}
+                            class={[
+                              'div',
+                              item.isPrev ? 'prev' : '',
+                              item.isNext ? 'next' : '',
+                              isActive(item.value) && item.isCurrent ? 'current' : '',
+                            ].join(' ')}
+                          >
+                            {format(item.value, 'dd')}
+                          </div>
+                        )
                       })}
-                    </div>)
+                    </div>
+                  )
                 })}
               </div>
               <div class="footer">
@@ -103,6 +108,6 @@ export default ComponentUtil.withInstall(
           </Fragment>
         )
       }
-    }
-  })
+    },
+  }),
 )

@@ -1,6 +1,6 @@
-import { App, Component, Plugin } from 'vue'
+import type { App, Component, Plugin } from 'vue'
 
-const withInstall = (comp: Component): Plugin => {
+function withInstall(comp: Component): Plugin {
   const c = comp as any
   c.install = function (app: App) {
     app.component(c.name, comp)
@@ -10,5 +10,5 @@ const withInstall = (comp: Component): Plugin => {
 }
 
 export default {
-  withInstall
+  withInstall,
 }

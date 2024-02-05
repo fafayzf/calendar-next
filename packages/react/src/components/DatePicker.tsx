@@ -1,6 +1,6 @@
-import { Fragment, useState, useEffect } from 'react'
+import { Fragment, useState } from 'react'
 import { DatePicker } from '@calendar-next/core'
-import { subMonths, addMonths, format, isSameDay } from 'date-fns'
+import { addMonths, format, isSameDay, subMonths } from 'date-fns'
 import './DatePicker.css'
 
 export default () => {
@@ -9,7 +9,7 @@ export default () => {
   const picker = new DatePicker({
     value: date,
     startWeek: 1,
-    weekRow: 6
+    weekRow: 6,
   })
 
   const header = picker.weekHead
@@ -36,10 +36,9 @@ export default () => {
     setNormalDate(nextMonth)
     picker.setDate(nextMonth)
     setPanel(picker.getRowWeek())
-    
   }
 
-  function chooseDate(item: any) {    
+  function chooseDate(item: any) {
     setNormalDate(item.value)
     setDate(item.value)
     picker.setDate(item.value)
@@ -52,7 +51,6 @@ export default () => {
     setDate(now)
     picker.setDate(date)
   }
-
 
   return (
     <Fragment>
@@ -82,18 +80,23 @@ export default () => {
             return (
               <div className="row" key={index}>
                 {row.map((item: any, i: number) => {
-                  return (<div
-                    onClick={() => chooseDate(item)}
-                    key={i}
-                    className={[
-                      'div',
-                      item.isPrev ? 'prev': '',
-                      item.isNext ? 'next': '',
-                      isActive(item.value) && item.isCurrent ? 'current' : ''
-                    ].join(' ')} 
-                  >{format(item.value, 'dd')}</div>)
+                  return (
+                    <div
+                      onClick={() => chooseDate(item)}
+                      key={i}
+                      className={[
+                        'div',
+                        item.isPrev ? 'prev' : '',
+                        item.isNext ? 'next' : '',
+                        isActive(item.value) && item.isCurrent ? 'current' : '',
+                      ].join(' ')}
+                    >
+                      {format(item.value, 'dd')}
+                    </div>
+                  )
                 })}
-              </div>)
+              </div>
+            )
           })}
         </div>
         <div className="footer">

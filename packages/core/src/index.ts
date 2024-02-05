@@ -2,13 +2,12 @@ import DatePicker, { weekMap } from './base'
 
 const picker = {
   weekMap,
-  DatePicker
+  DatePicker,
 }
 
 export {
   weekMap,
-  DatePicker
+  DatePicker,
 }
 
-// export default picker
-
+export default picker

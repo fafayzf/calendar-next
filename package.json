@@ -1,29 +1,33 @@
 {
   "name": "calendar-next",
+  "type": "module",
   "version": "1.0.0",
   "description": "calendar components, `vue`, `react`, `svelte` UI calendar components",
-  "main": "./dist/index.js",
-  "scripts": {
-    "dev": "pnpm --parallel --filter ./packages/* dev",
-    "dev:examples": "pnpm --parallel --filter ./examples/* dev",
-    "build:core": "pnpm --parallel --filter ./packages/core build",
-    "build:svelte": "pnpm --parallel --filter ./packages/svelte build",
-    "build:vue": "pnpm build && pnpm --parallel --filter ./packages/vue build"
-  },
-  "keywords": [],
   "author": "fafayzf <fafayzf@163.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/fafayzf/calendar-next#readme",
   "repository": {
     "type": "git",
     "url": "https://github.com/fafayzf/calendar-next.git"
   },
   "bugs": "https://github.com/fafayzf/calendar-next/issues",
-  "homepage": "https://github.com/fafayzf/calendar-next#readme",
-  "license": "MIT",
+  "keywords": [],
+  "scripts": {
+    "dev": "pnpm --parallel --filter ./packages/* dev",
+    "dev:examples": "pnpm --parallel --filter ./examples/* dev",
+    "build:core": "pnpm --parallel --filter ./packages/core build",
+    "build:svelte": "pnpm --parallel --filter ./packages/svelte build",
+    "build:vue": "pnpm build && pnpm --parallel --filter ./packages/vue build",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
   "dependencies": {
     "date-fns": "^2.30.0"
   },
   "devDependencies": {
+    "@antfu/eslint-config": "^2.6.4",
     "@types/node": "^20.8.6",
+    "eslint": "^8.56.0",
     "tsup": "^8.0.1",
     "typescript": "^5.3.3"
   }

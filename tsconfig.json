@@ -1,20 +1,20 @@
 {
   "compilerOptions": {
     "ignoreDeprecations": "5.0",
-    "module": "esnext",
     "target": "ES6",
     "lib": ["ESNext", "DOM"],
-    "strict": true,
-    "declaration": false,
+    "module": "esnext",
     "moduleResolution": "node",
     "paths": {
     },
     "types": [
-      "node",
-    ]
+      "node"
+    ],
+    "strict": true,
+    "declaration": false
   },
   "exclude": [
     "**/dist/**",
     "./packages/*/*.d.ts"
-  ],
+  ]
 }

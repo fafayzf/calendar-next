@@ -2,9 +2,15 @@
   "name": "@calendar-next/react",
   "version": "0.0.1",
   "description": "",
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
+  "author": "fafayzf <fafayzf@163.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/fafayzf/calendar-next#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fafayzf/calendar-next.git"
+  },
+  "bugs": "https://github.com/fafayzf/calendar-next/issues",
+  "keywords": [],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -12,18 +18,12 @@
       "require": "./dist/index.js"
     }
   },
-  "keywords": [],
-  "author": "fafayzf <fafayzf@163.com>",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/fafayzf/calendar-next.git"
-  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "dev": "tsup --watch"
   },
-  "bugs": "https://github.com/fafayzf/calendar-next/issues",
-  "homepage": "https://github.com/fafayzf/calendar-next#readme",
-  "license": "MIT",
   "dependencies": {
     "@calendar-next/core": "workspace:*",
     "@calendar-next/theme": "workspace:*",

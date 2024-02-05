@@ -7,5 +7,5 @@ export default defineConfig({
   clean: true,
   treeshake: true,
   dts: true,
-  injectStyle: true
+  injectStyle: true,
 })

@@ -9,5 +9,5 @@ export default defineConfig({
   dts: true,
   jsxFactory: 'h',
   jsxFragment: 'h',
-  injectStyle: true
+  injectStyle: true,
 })
