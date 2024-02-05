@@ -18,17 +18,11 @@
   },
   "files": ["dist"],
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "fafayzf <fafazyf@163.com>",
+  "license": "MIT",
   "dependencies": {
     "@calendar-next/core": "workspace:*",
     "date-fns": "^2.30.0",
     "vue": "^3.4.15"
-  },
-  "devDependencies": {
-    "@vue/runtime-dom": "^3.4.15",
-    "autoprefixer": "^10.0.1",
-    "postcss": "^8",
-    "tailwindcss": "^3.3.0"
   }
 }

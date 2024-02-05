@@ -6,7 +6,6 @@
     "dist"
   ],
   "scripts": {
-    "dev:wind": "npx tailwindcss -i ./src/normal/index.scss -o ./dist/normal/index.css --watch"
   },
   "keywords": [],
   "author": "fafazyf <fafayzf@163.com>",
